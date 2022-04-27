@@ -6,7 +6,8 @@ import java.awt.*;
 public class Tile extends JLabel {
     private ImageIcon imgIcon;
     private int tileType;
-    private boolean moovable;
+    private boolean movable;
+
 
     public Tile(int tileType) {
         this.tileType = tileType;
@@ -14,31 +15,46 @@ public class Tile extends JLabel {
     }
 
     public void setTileType(int tileType) {
-        setVisible(true);
-        setSize(new Dimension(50, 50));
-        setOpaque(true);
-        setBackground(Color.green);
+
 
         switch (tileType) {
             case 0:
                 imgIcon = new ImageIcon("C:\\Users\\Alexander\\IdeaProjects\\aoopProject\\src\\assets\\blank.png");
-                this.moovable = false;
                 break;
             case 1:
-                imgIcon = new ImageIcon("src/assets/blankmarked.png");
+                imgIcon = new ImageIcon("C:\\Users\\Alexander\\IdeaProjects\\aoopProject\\src\\assets\\blankmarked.png");
                 break;
             case 2:
-                imgIcon = new ImageIcon("src/assets/create.png");
+                imgIcon = new ImageIcon("src/assets/crate.png");
                 break;
             case 3:
-                imgIcon = new ImageIcon("src/assets/createmarked.png");
+                imgIcon = new ImageIcon("src/assets/cratemarked.png");
                 break;
             case 4:
                 imgIcon = new ImageIcon("src/assets/wall.png");
                 break;
+            case 9:
+                imgIcon = new ImageIcon("src/assets/player.png");
+                break;
         }
-        ImageIcon scaledIcon = new ImageIcon(imgIcon.getImage().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH));
-        setIcon(scaledIcon);
+        this.movable = true;
+        setVisible(true);
+        imgIcon.setImage(imgIcon.getImage().getScaledInstance(32, 32, Image.SCALE_DEFAULT));
+        setOpaque(true);
+        setBackground(Color.green);
+        setIcon(imgIcon);
         repaint();
+    }
+
+    public void moveUp(Tile tile) {
+        if (tile.isMovable()) {
+            tile.setTileType(9);
+        }else{
+            System.out.println("You can't move there");
+        }
+    }
+
+    private boolean isMovable() {
+        return movable;
     }
 }

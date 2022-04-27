@@ -9,6 +9,10 @@ public class MenuView extends JPanel {
         add(new JLabel("Menu"));
         add(new JButton("Start"));
         add(new JButton("Exit"));
+
+
+
+
     }
 
 }

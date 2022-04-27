@@ -1,27 +1,23 @@
 package View;
 
-import Model.MapModel;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MapView {
 
-    public MapView() {
-
-    }
-
-    //should remove the model input and calculate the size of the map on its own
-    public JPanel drawMap(Tile[][] mapGrid, MapModel map) {
-
+    public JPanel drawMap(ArrayList<ArrayList<Tile>> mapGrid) {
         JPanel mapPanel = new JPanel();
-        mapPanel.setLayout(new GridLayout(map.getHeight(), map.getWidth()));
-        for (int i = 0; i < map.getHeight(); i++) {
-            for (int j = 0; j < map.getWidth(); j++) {
-                mapPanel.add(mapGrid[i][j]);
+        int rows = mapGrid.size();
+        int cols = mapGrid.get(0).size();
+        mapPanel.setLayout(new GridLayout(rows, cols));
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                mapPanel.add(mapGrid.get(i).get(j));
             }
         }
-        mapPanel.setPreferredSize(new Dimension( map.getWidth() *(map.getWidth()* map.getHeight()), map.getHeight() *(map.getWidth())* map.getHeight()));
+        mapPanel.setLayout(new GridLayout(rows, cols));
+        mapPanel.setPreferredSize(new Dimension(cols * 32, rows * 32));
         mapPanel.setBackground(Color.BLACK);
         return mapPanel;
     }
