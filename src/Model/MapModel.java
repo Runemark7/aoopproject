@@ -10,6 +10,9 @@ public class MapModel {
     private ArrayList<ArrayList<Tile>> mapGrid;
     private int height;
     private int width;
+    private int playerX;
+    private int playerY;
+    private int boxesUntilWin;
 
     public MapModel(){
         this.mapID = 0;
@@ -32,24 +35,30 @@ public class MapModel {
 
     public ArrayList<ArrayList<Tile>> getMapFromFile(int level) {
         mapGrid = new ArrayList<>();
-
         File file = new File("src/assets/levels/"+ level +".txt");
-
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
-
+            int boxesUntilWin = 0;
             String st;
             while ((st = reader.readLine()) != null){
                 ArrayList<Tile> row = new ArrayList<Tile>();
                 for (int i = 0; i < st.length(); i++) {
                     int tileID = Integer.parseInt(String.valueOf(st.charAt(i)));
+                    //TODO: maybe should move the setTileType switch/case to this file???
+                    if (tileID == 1) {
+                        boxesUntilWin++;
+                    }
+                    if (tileID == 9) {
+                        playerX = i;
+                        playerY = mapGrid.size();
+                    }
                     Tile newTile = new Tile(tileID);
                     row.add(newTile);
                 }
                 mapGrid.add(row);
             }
             reader.close();
-
+            this.boxesUntilWin = boxesUntilWin;
             this.height = mapGrid.size();
             this.width = mapGrid.get(0).size();
         }
@@ -79,35 +88,26 @@ public class MapModel {
     }
 
     public void moveUp() {
-        for (int i = 0; i < mapGrid.size(); i++) {
-            for (int j = 0; j < mapGrid.get(i).size(); j++) {
-                mapGrid.get(i).get(j).moveUp(mapGrid.get(i+1).get(j));
-            }
+        if(mapGrid.get(playerY).get(playerX).move(mapGrid.get(playerY).get(playerX),mapGrid.get(playerY - 1).get(playerX))) {
+            playerY--;
         }
     }
 
-    /*public void moveDown() {
-        for (int i = 0; i < mapGrid.size(); i++) {
-            for (int j = 0; j < mapGrid.get(i).size(); j++) {
-                mapGrid.get(i).get(j).moveDown();
-            }
+    public void moveDown() {
+        if (mapGrid.get(playerY).get(playerX).move(mapGrid.get(playerY).get(playerX),mapGrid.get(playerY + 1).get(playerX))){
+            playerY++;
         }
     }
-
 
     public void moveLeft() {
-        for (int i = 0; i < mapGrid.size(); i++) {
-            for (int j = 0; j < mapGrid.get(i).size(); j++) {
-                mapGrid.get(i).get(j).moveLeft();
-            }
+        if(mapGrid.get(playerY).get(playerX).move(mapGrid.get(playerY).get(playerX),mapGrid.get(playerY).get(playerX - 1))){
+            playerX--;
         }
     }
 
     public void moveRight() {
-        for (int i = 0; i < mapGrid.size(); i++) {
-            for (int j = 0; j < mapGrid.get(i).size(); j++) {
-                mapGrid.get(i).get(j).moveRight();
-            }
+        if(mapGrid.get(playerY).get(playerX).move(mapGrid.get(playerY).get(playerX),mapGrid.get(playerY).get(playerX + 1))){
+            playerX++;
         }
-    }*/
+    }
 }

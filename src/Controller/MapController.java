@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class MapController extends KeyControllers{
 
-    private static MapModel mapModel;
-    private static MapView mapView;
+    private MapModel mapModel;
+    private MapView mapView;
     private JFrame frame;
 
     public MapController(MapModel mapModel, MapView mapView, JFrame frame) {
@@ -18,16 +18,20 @@ public class MapController extends KeyControllers{
 
     public void update() {
         if (isUp()) {
+            System.out.println("up");
             mapModel.moveUp();
         }
         if (isDown()) {
             System.out.println("down");
+            mapModel.moveDown();
         }
         if (isLeft()) {
             System.out.println("left");
+            mapModel.moveLeft();
         }
         if (isRight()) {
             System.out.println("right");
+            mapModel.moveRight();
         }
     }
 

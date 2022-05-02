@@ -18,10 +18,10 @@ public class KeyControllers implements KeyListener {
             up = true;
         }
         if(code == KeyEvent.VK_A) {
-            right = true;
+            left = true;
         }
         if(code == KeyEvent.VK_D) {
-            left = true;
+            right = true;
         }
         if(code == KeyEvent.VK_S) {
             down = true;
@@ -36,10 +36,10 @@ public class KeyControllers implements KeyListener {
             up = false;
         }
         if(code == KeyEvent.VK_A) {
-            right = false;
+            left = false;
         }
         if(code == KeyEvent.VK_D) {
-            left = false;
+            right = false;
         }
         if(code == KeyEvent.VK_S) {
             down = false;
@@ -48,6 +48,7 @@ public class KeyControllers implements KeyListener {
     }
 
     public boolean isUp() {
+        System.out.println(up);
         return up;
     }
 
